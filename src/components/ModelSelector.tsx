@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Bot, Zap, MessageSquare } from 'lucide-react';
+import { Settings, Zap, MessageSquare } from 'lucide-react';
 
 interface ModelSelectorProps {
   selectedModel: string;
@@ -12,17 +12,17 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({ selectedModel, onModelCha
   const models = [
     {
       id: 'llama-3.1-8b-instant',
-      name: 'A7 Fast',
+      name: 'Fast Mode',
       description: 'Quick responses',
       icon: Zap,
-      color: 'text-orange-500'
+      color: 'text-orange-600'
     },
     {
       id: 'deepseek-r1-distill-llama-70b',
-      name: 'A7 Long conversation',
+      name: 'Smart Mode',
       description: 'Detailed responses',
       icon: MessageSquare,
-      color: 'text-blue-500'
+      color: 'text-blue-600'
     }
   ];
 
@@ -30,13 +30,14 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({ selectedModel, onModelCha
 
   return (
     <div className="flex items-center space-x-2">
-      <Bot className="text-gray-600" size={16} />
+      <Settings className="text-gray-600 hidden sm:block" size={16} />
       <Select value={selectedModel} onValueChange={onModelChange}>
-        <SelectTrigger className="w-48 bg-white border-gray-200 focus:ring-2 focus:ring-blue-500">
+        <SelectTrigger className="w-36 sm:w-48 bg-white border-gray-300 focus:ring-2 focus:ring-gray-500 shadow-sm">
           <SelectValue>
             <div className="flex items-center space-x-2">
               <currentModel.icon className={`${currentModel.color} w-4 h-4`} />
-              <span className="font-medium">{currentModel.name}</span>
+              <span className="font-medium text-sm hidden sm:inline">{currentModel.name}</span>
+              <span className="font-medium text-sm sm:hidden">Mode</span>
             </div>
           </SelectValue>
         </SelectTrigger>

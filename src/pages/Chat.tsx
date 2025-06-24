@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, Home, ArrowLeft } from 'lucide-react';
+import { Send, User, Home, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ModelSelector from '../components/ModelSelector';
 
@@ -125,19 +125,6 @@ const Chat = () => {
     }
   };
 
-  const getSenderIcon = (sender: string) => {
-    switch (sender) {
-      case 'user':
-        return <User className="text-blue-600" size={20} />;
-      case 'ram':
-        return <Bot className="text-purple-600" size={20} />;
-      case 'laxman':
-        return <Bot className="text-green-600" size={20} />;
-      default:
-        return <User className="text-gray-600" size={20} />;
-    }
-  };
-
   const getSenderName = (sender: string) => {
     switch (sender) {
       case 'user':
@@ -154,20 +141,20 @@ const Chat = () => {
   const getSenderColor = (sender: string) => {
     switch (sender) {
       case 'user':
-        return 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg';
+        return 'bg-gray-800 text-white shadow-lg';
       case 'ram':
-        return 'bg-gradient-to-r from-purple-50 to-purple-100 text-purple-800 border border-purple-200 shadow-md';
+        return 'bg-white text-gray-800 border border-gray-200 shadow-md';
       case 'laxman':
-        return 'bg-gradient-to-r from-green-50 to-green-100 text-green-800 border border-green-200 shadow-md';
+        return 'bg-gray-100 text-gray-800 border border-gray-300 shadow-md';
       default:
         return 'bg-gray-100 text-gray-800';
     }
   };
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
+    <div className="h-screen bg-gradient-to-br from-gray-50 to-white flex flex-col">
       {/* Enhanced Header */}
-      <div className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-gray-200/50 p-4">
+      <div className="bg-white/90 backdrop-blur-sm shadow-lg border-b border-gray-200 p-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Link 
@@ -175,54 +162,57 @@ const Chat = () => {
               className="flex items-center text-gray-600 hover:text-gray-800 transition-all duration-200 hover:scale-105"
             >
               <ArrowLeft size={20} className="mr-2" />
-              <span className="font-medium">Back to Home</span>
+              <span className="font-medium hidden sm:inline">Back to Home</span>
+              <Home size={20} className="sm:hidden" />
             </Link>
           </div>
           
           <div className="text-center">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
               Triple Chat
             </h1>
-            <p className="text-sm text-gray-600">AI Conversation Experience</p>
+            <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">AI Conversation Experience</p>
           </div>
           
-          <ModelSelector 
-            selectedModel={selectedModel}
-            onModelChange={setSelectedModel}
-          />
+          <div className="flex items-center">
+            <ModelSelector 
+              selectedModel={selectedModel}
+              onModelChange={setSelectedModel}
+            />
+          </div>
         </div>
       </div>
 
       {/* Enhanced Messages */}
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6">
         <div className="max-w-5xl mx-auto space-y-6">
           {messages.length === 0 && (
-            <div className="text-center py-16">
-              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-12 shadow-xl border border-white/50">
+            <div className="text-center py-8 sm:py-16">
+              <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-xl border border-gray-200 max-w-2xl mx-auto">
                 <div className="mb-8">
-                  <div className="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Bot className="text-white" size={40} />
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-r from-gray-600 to-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <User className="text-white" size={32} />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-2">Welcome to Triple Chat!</h3>
-                  <p className="text-gray-600 mb-8 max-w-md mx-auto">
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Welcome to Triple Chat!</h3>
+                  <p className="text-gray-600 mb-8 max-w-md mx-auto text-sm sm:text-base">
                     Start a conversation with Ram and Laxman. They'll both respond and interact with each other too!
                   </p>
                 </div>
                 
-                <div className="flex justify-center space-x-12">
+                <div className="flex flex-col sm:flex-row justify-center items-center space-y-6 sm:space-y-0 sm:space-x-12">
                   <div className="text-center group">
-                    <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                      <Bot className="text-white" size={28} />
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-gray-600 to-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform shadow-lg">
+                      <User className="text-white" size={24} />
                     </div>
-                    <p className="text-lg font-semibold text-purple-600">Ram</p>
-                    <p className="text-sm text-gray-500">Dedicated & Intelligent</p>
+                    <p className="text-lg font-semibold text-gray-700">Ram</p>
+                    <p className="text-xs sm:text-sm text-gray-500">Dedicated & Intelligent</p>
                   </div>
                   <div className="text-center group">
-                    <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                      <Bot className="text-white" size={28} />
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform shadow-lg">
+                      <User className="text-white" size={24} />
                     </div>
-                    <p className="text-lg font-semibold text-green-600">Laxman</p>
-                    <p className="text-sm text-gray-500">Funny & Witty</p>
+                    <p className="text-lg font-semibold text-gray-700">Laxman</p>
+                    <p className="text-xs sm:text-sm text-gray-500">Funny & Witty</p>
                   </div>
                 </div>
               </div>
@@ -234,9 +224,11 @@ const Chat = () => {
               key={message.id}
               className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
             >
-              <div className={`max-w-[75%] rounded-3xl p-6 ${getSenderColor(message.sender)} backdrop-blur-sm`}>
+              <div className={`max-w-[85%] sm:max-w-[75%] rounded-3xl p-4 sm:p-6 ${getSenderColor(message.sender)} backdrop-blur-sm`}>
                 <div className="flex items-center space-x-3 mb-3">
-                  {getSenderIcon(message.sender)}
+                  <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                    <User className="text-white" size={16} />
+                  </div>
                   <span className="font-semibold text-sm">{getSenderName(message.sender)}</span>
                   <span className="text-xs opacity-70">
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -249,7 +241,7 @@ const Chat = () => {
 
           {isLoading && (
             <div className="flex justify-start animate-fade-in">
-              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 max-w-[75%] shadow-lg border border-gray-200/50">
+              <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 max-w-[75%] shadow-lg border border-gray-200">
                 <div className="flex items-center space-x-3">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
@@ -267,24 +259,24 @@ const Chat = () => {
       </div>
 
       {/* Enhanced Input */}
-      <div className="bg-white/80 backdrop-blur-sm border-t border-gray-200/50 p-6">
+      <div className="bg-white/90 backdrop-blur-sm border-t border-gray-200 p-4 sm:p-6">
         <div className="max-w-5xl mx-auto">
-          <div className="flex space-x-4">
+          <div className="flex space-x-3 sm:space-x-4">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
               placeholder="Type your message to Ram and Laxman..."
-              className="flex-1 px-6 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white shadow-lg placeholder-gray-500"
+              className="flex-1 px-4 sm:px-6 py-3 sm:py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent bg-white shadow-lg placeholder-gray-500 text-sm sm:text-base"
               disabled={isLoading}
             />
             <button
               onClick={handleSendMessage}
               disabled={!input.trim() || isLoading}
-              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center space-x-2 shadow-lg hover:scale-105"
+              className="px-6 sm:px-8 py-3 sm:py-4 bg-gray-800 text-white rounded-full hover:bg-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center space-x-2 shadow-lg hover:scale-105"
             >
-              <Send size={20} />
+              <Send size={18} />
             </button>
           </div>
         </div>
