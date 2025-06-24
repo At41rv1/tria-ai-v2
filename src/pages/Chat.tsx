@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Bot, User, Home, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ModelSelector from '../components/ModelSelector';
 
 interface Message {
   id: string;
@@ -14,6 +15,7 @@ const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedModel, setSelectedModel] = useState('deepseek-r1-distill-llama-70b');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -37,7 +39,7 @@ const Chat = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'deepseek-r1-distill-llama-70b',
+          model: selectedModel,
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: prompt }
@@ -152,67 +154,75 @@ const Chat = () => {
   const getSenderColor = (sender: string) => {
     switch (sender) {
       case 'user':
-        return 'bg-blue-600 text-white';
+        return 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg';
       case 'ram':
-        return 'bg-purple-100 text-purple-800 border border-purple-200';
+        return 'bg-gradient-to-r from-purple-50 to-purple-100 text-purple-800 border border-purple-200 shadow-md';
       case 'laxman':
-        return 'bg-green-100 text-green-800 border border-green-200';
+        return 'bg-gradient-to-r from-green-50 to-green-100 text-green-800 border border-green-200 shadow-md';
       default:
         return 'bg-gray-100 text-gray-800';
     }
   };
 
   return (
-    <div className="h-screen bg-gray-50 flex flex-col">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b border-gray-200 p-4">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
+    <div className="h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
+      {/* Enhanced Header */}
+      <div className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-gray-200/50 p-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Link 
               to="/" 
-              className="flex items-center text-gray-600 hover:text-gray-800 transition-colors"
+              className="flex items-center text-gray-600 hover:text-gray-800 transition-all duration-200 hover:scale-105"
             >
               <ArrowLeft size={20} className="mr-2" />
-              Back to Home
+              <span className="font-medium">Back to Home</span>
             </Link>
           </div>
           
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-800">Triple Chat</h1>
-            <p className="text-sm text-gray-600">You, Ram & Laxman</p>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Triple Chat
+            </h1>
+            <p className="text-sm text-gray-600">AI Conversation Experience</p>
           </div>
           
-          <div className="flex items-center space-x-2">
-            <div className="flex items-center space-x-1">
-              <Bot className="text-purple-600" size={16} />
-              <span className="text-sm text-gray-600">Ram</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <Bot className="text-green-600" size={16} />
-              <span className="text-sm text-gray-600">Laxman</span>
-            </div>
-          </div>
+          <ModelSelector 
+            selectedModel={selectedModel}
+            onModelChange={setSelectedModel}
+          />
         </div>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4">
-        <div className="max-w-4xl mx-auto space-y-4">
+      {/* Enhanced Messages */}
+      <div className="flex-1 overflow-y-auto p-6">
+        <div className="max-w-5xl mx-auto space-y-6">
           {messages.length === 0 && (
-            <div className="text-center py-12">
-              <div className="bg-white rounded-xl p-8 shadow-sm">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Welcome to Triple Chat!</h3>
-                <p className="text-gray-600 mb-4">Start a conversation with Ram and Laxman. They'll both respond and interact with each other too!</p>
-                <div className="flex justify-center space-x-8">
-                  <div className="text-center">
-                    <Bot className="text-purple-600 mx-auto mb-2" size={32} />
-                    <p className="text-sm font-medium text-purple-600">Ram</p>
-                    <p className="text-xs text-gray-500">Dedicated & Fun</p>
+            <div className="text-center py-16">
+              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-12 shadow-xl border border-white/50">
+                <div className="mb-8">
+                  <div className="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Bot className="text-white" size={40} />
                   </div>
-                  <div className="text-center">
-                    <Bot className="text-green-600 mx-auto mb-2" size={32} />
-                    <p className="text-sm font-medium text-green-600">Laxman</p>
-                    <p className="text-xs text-gray-500">Funny & Perfect</p>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2">Welcome to Triple Chat!</h3>
+                  <p className="text-gray-600 mb-8 max-w-md mx-auto">
+                    Start a conversation with Ram and Laxman. They'll both respond and interact with each other too!
+                  </p>
+                </div>
+                
+                <div className="flex justify-center space-x-12">
+                  <div className="text-center group">
+                    <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                      <Bot className="text-white" size={28} />
+                    </div>
+                    <p className="text-lg font-semibold text-purple-600">Ram</p>
+                    <p className="text-sm text-gray-500">Dedicated & Intelligent</p>
+                  </div>
+                  <div className="text-center group">
+                    <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                      <Bot className="text-white" size={28} />
+                    </div>
+                    <p className="text-lg font-semibold text-green-600">Laxman</p>
+                    <p className="text-sm text-gray-500">Funny & Witty</p>
                   </div>
                 </div>
               </div>
@@ -222,10 +232,10 @@ const Chat = () => {
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
             >
-              <div className={`max-w-[70%] rounded-2xl p-4 ${getSenderColor(message.sender)}`}>
-                <div className="flex items-center space-x-2 mb-2">
+              <div className={`max-w-[75%] rounded-3xl p-6 ${getSenderColor(message.sender)} backdrop-blur-sm`}>
+                <div className="flex items-center space-x-3 mb-3">
                   {getSenderIcon(message.sender)}
                   <span className="font-semibold text-sm">{getSenderName(message.sender)}</span>
                   <span className="text-xs opacity-70">
@@ -238,15 +248,15 @@ const Chat = () => {
           ))}
 
           {isLoading && (
-            <div className="flex justify-start">
-              <div className="bg-gray-200 rounded-2xl p-4 max-w-[70%]">
-                <div className="flex items-center space-x-2">
+            <div className="flex justify-start animate-fade-in">
+              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 max-w-[75%] shadow-lg border border-gray-200/50">
+                <div className="flex items-center space-x-3">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
                     <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-100"></div>
                     <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-200"></div>
                   </div>
-                  <span className="text-sm text-gray-600">AIs are thinking...</span>
+                  <span className="text-sm text-gray-600 font-medium">AIs are thinking...</span>
                 </div>
               </div>
             </div>
@@ -256,9 +266,9 @@ const Chat = () => {
         </div>
       </div>
 
-      {/* Input */}
-      <div className="bg-white border-t border-gray-200 p-4">
-        <div className="max-w-4xl mx-auto">
+      {/* Enhanced Input */}
+      <div className="bg-white/80 backdrop-blur-sm border-t border-gray-200/50 p-6">
+        <div className="max-w-5xl mx-auto">
           <div className="flex space-x-4">
             <input
               type="text"
@@ -266,13 +276,13 @@ const Chat = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
               placeholder="Type your message to Ram and Laxman..."
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="flex-1 px-6 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white shadow-lg placeholder-gray-500"
               disabled={isLoading}
             />
             <button
               onClick={handleSendMessage}
               disabled={!input.trim() || isLoading}
-              className="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
+              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center space-x-2 shadow-lg hover:scale-105"
             >
               <Send size={20} />
             </button>
