@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, Users, ArrowRight, Sparkles, Zap, Shield, Star, CheckCircle } from 'lucide-react';
@@ -34,13 +33,12 @@ const Index = () => {
           </p>
           
           <p className="text-base sm:text-lg text-gray-500 mb-12 max-w-3xl mx-auto animate-fade-in delay-700 leading-relaxed px-4">
-            Experience dynamic three-way conversations with Ram & Laxman - two distinct AI personalities 
-            powered by advanced models, creating natural and engaging dialogues that feel completely human.
+            Experience dynamic conversations with AI companions or get personalized learning support with our intelligent tutoring system that adapts to your unique learning style.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in delay-1000">
             <Link 
-              to="/chat" 
+              to="/chat-selector" 
               className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-gray-800 to-gray-700 text-white rounded-full text-lg font-semibold hover:from-gray-900 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl"
             >
               Start Chatting 
@@ -136,7 +134,7 @@ const Index = () => {
             Join thousands of users discovering the next level of AI conversation technology
           </p>
           <Link 
-            to="/chat" 
+            to="/chat-selector" 
             className="group inline-flex items-center px-12 py-5 bg-gradient-to-r from-gray-800 to-gray-700 text-white rounded-full text-xl font-semibold hover:from-gray-900 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl"
           >
             Enter Chat Room 
