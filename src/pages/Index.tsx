@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, Users, Bot, ArrowRight, Sparkles, Zap, Shield } from 'lucide-react';
@@ -139,7 +138,7 @@ const Index = () => {
           >
             Enter Chat Room 
             <MessageCircle className="ml-3 w-6 h-6 group-hover:rotate-12 transition-transform" />
-          </I>
+          </Link>
         </div>
       </section>
 
