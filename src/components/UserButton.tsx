@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { User, LogOut } from 'lucide-react';
-import { useAuth } from '../contexts/NeonAuthContext';
+import { useAuth } from '../contexts/HybridAuthContext';
 import { toast } from "@/hooks/use-toast";
 import AuthModal from './AuthModal';
 

@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { NeonAuthProvider } from "./contexts/NeonAuthContext";
+import { HybridAuthProvider } from "./contexts/HybridAuthContext";
 import Index from "./pages/Index";
 import Chat from "./pages/Chat";
 import StudyChat from "./pages/StudyChat";
@@ -15,7 +15,7 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <NeonAuthProvider>
+    <HybridAuthProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -30,7 +30,7 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
-    </NeonAuthProvider>
+    </HybridAuthProvider>
   </QueryClientProvider>
 );
 

@@ -3,6 +3,8 @@ import { Send, User, Home, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ModelSelector from '../components/ModelSelector';
 import UserButton from '../components/UserButton';
+import { useAuth } from '../contexts/HybridAuthContext';
+import { saveChatMessage, getChatHistory } from '../lib/database';
 
 interface Message {
   id: string;
@@ -15,8 +17,9 @@ const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState('llama-3.1-8b-instant'); // Default to Fast Mode
+  const [selectedModel, setSelectedModel] = useState('llama-3.1-8b-instant');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { currentUser } = useAuth();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -25,6 +28,28 @@ const Chat = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Load chat history when user logs in
+  useEffect(() => {
+    const loadChatHistory = async () => {
+      if (currentUser) {
+        try {
+          const history = await getChatHistory(currentUser.id, 'triple', 20);
+          const formattedHistory = history.map(msg => ({
+            id: msg.id,
+            sender: msg.sender as 'user' | 'ram' | 'laxman',
+            content: msg.content,
+            timestamp: msg.createdAt
+          }));
+          setMessages(formattedHistory);
+        } catch (error) {
+          console.error('Error loading chat history:', error);
+        }
+      }
+    };
+
+    loadChatHistory();
+  }, [currentUser]);
 
   const callGroqAPI = async (prompt: string, apiKey: string, senderName: string) => {
     const systemPrompt = senderName === 'Ram' 
@@ -61,6 +86,16 @@ const Chat = () => {
     }
   };
 
+  const saveMessage = async (sender: string, content: string) => {
+    if (currentUser) {
+      try {
+        await saveChatMessage(currentUser.id, sender, content, 'triple');
+      } catch (error) {
+        console.error('Error saving message:', error);
+      }
+    }
+  };
+
   const handleSendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -72,6 +107,7 @@ const Chat = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    await saveMessage('user', userMessage.content);
     setInput('');
     setIsLoading(true);
 
@@ -94,6 +130,7 @@ const Chat = () => {
       };
 
       setMessages(prev => [...prev, ramMessage]);
+      await saveMessage('ram', ramMessage.content);
 
       setTimeout(async () => {
         const updatedContext = conversationContext + `\nRam: ${ramResponse}`;
@@ -112,6 +149,7 @@ const Chat = () => {
         };
 
         setMessages(prev => [...prev, laxmanMessage]);
+        await saveMessage('laxman', laxmanMessage.content);
         setIsLoading(false);
       }, 1500);
 
@@ -193,6 +231,7 @@ const Chat = () => {
                   <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Welcome to Triple Chat!</h3>
                   <p className="text-gray-600 mb-8 max-w-md mx-auto text-sm sm:text-base">
                     Start a conversation with Ram and Laxman. They'll both respond and interact with each other too!
+                    {currentUser && <span className="block mt-2 text-green-600">✓ Your chat history will be saved</span>}
                   </p>
                 </div>
                 
