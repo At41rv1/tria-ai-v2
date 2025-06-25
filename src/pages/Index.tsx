@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, Users, ArrowRight, Sparkles, Zap, Shield, Star, CheckCircle } from 'lucide-react';
+import Header from '../components/Header';
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+      <Header />
+      
       {/* Subtle Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gray-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
@@ -13,7 +16,7 @@ const Index = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <section className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-6xl mx-auto">
           <div className="mb-8 animate-fade-in">
             <div className="inline-flex items-center px-6 py-3 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 shadow-lg text-gray-700 text-sm mb-8 hover:shadow-xl transition-all duration-300">

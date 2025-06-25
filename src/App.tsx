@@ -8,6 +8,7 @@ import { HybridAuthProvider } from "./contexts/HybridAuthContext";
 import Index from "./pages/Index";
 import Chat from "./pages/Chat";
 import StudyChat from "./pages/StudyChat";
+import Settings from "./pages/Settings";
 import ChatSelector from "./components/ChatSelector";
 import NotFound from "./pages/NotFound";
 
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/chat-selector" element={<ChatSelector />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/study-chat" element={<StudyChat />} />
+            <Route path="/settings" element={<Settings />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
