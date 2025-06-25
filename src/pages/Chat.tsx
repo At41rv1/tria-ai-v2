@@ -1,8 +1,8 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, User, Home, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ModelSelector from '../components/ModelSelector';
+import UserButton from '../components/UserButton';
 
 interface Message {
   id: string;
@@ -15,7 +15,7 @@ const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState('deepseek-r1-distill-llama-70b');
+  const [selectedModel, setSelectedModel] = useState('llama-3.1-8b-instant'); // Default to Fast Mode
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -75,13 +75,11 @@ const Chat = () => {
     setInput('');
     setIsLoading(true);
 
-    // Create conversation context for AIs
     const conversationContext = messages.slice(-5).map(msg => 
       `${msg.sender === 'user' ? 'User' : msg.sender === 'ram' ? 'Ram' : 'Laxman'}: ${msg.content}`
     ).join('\n') + `\nUser: ${userMessage.content}`;
 
     try {
-      // Get Ram's response first
       const ramResponse = await callGroqAPI(
         `Here's our conversation so far:\n${conversationContext}\n\nPlease respond as Ram. Keep it conversational and engaging.`,
         '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',
@@ -97,9 +95,7 @@ const Chat = () => {
 
       setMessages(prev => [...prev, ramMessage]);
 
-      // Small delay for natural conversation flow
       setTimeout(async () => {
-        // Get Laxman's response (he can see Ram's response too)
         const updatedContext = conversationContext + `\nRam: ${ramResponse}`;
         
         const laxmanResponse = await callGroqAPI(
@@ -174,11 +170,12 @@ const Chat = () => {
             <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">AI Conversation Experience</p>
           </div>
           
-          <div className="flex items-center">
+          <div className="flex items-center space-x-3">
             <ModelSelector 
               selectedModel={selectedModel}
               onModelChange={setSelectedModel}
             />
+            <UserButton />
           </div>
         </div>
       </div>

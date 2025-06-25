@@ -1,8 +1,8 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, User, Home, ArrowLeft, Brain } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ModelSelector from '../components/ModelSelector';
+import UserButton from '../components/UserButton';
 
 interface Message {
   id: string;
@@ -15,7 +15,7 @@ const StudyChat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState('deepseek-r1-distill-llama-70b');
+  const [selectedModel, setSelectedModel] = useState('llama-3.1-8b-instant'); // Default to Fast Mode
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -80,7 +80,6 @@ const StudyChat = () => {
     ).join('\n') + `\nStudent: ${userMessage.content}`;
 
     try {
-      // Get first tutor's response
       const tutor1Response = await callGroqAPI(
         `Learning context:\n${conversationContext}\n\nPlease provide educational support as Tutor1. Focus on clear explanations and structured learning.`,
         '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',
@@ -171,11 +170,12 @@ const StudyChat = () => {
             <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">AI-Powered Learning Experience</p>
           </div>
           
-          <div className="flex items-center">
+          <div className="flex items-center space-x-3">
             <ModelSelector 
               selectedModel={selectedModel}
               onModelChange={setSelectedModel}
             />
+            <UserButton />
           </div>
         </div>
       </div>
