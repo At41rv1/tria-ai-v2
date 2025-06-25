@@ -1,7 +1,7 @@
 
 import { db } from '../config/neon';
 import { users, chatMessages, userSessions } from './schema';
-import { eq, desc } from 'drizzle-orm';
+import { eq, desc, and } from 'drizzle-orm';
 
 export interface User {
   id: string;
@@ -67,8 +67,24 @@ export const getChatHistory = async (
 ): Promise<ChatMessage[]> => {
   const result = await db.select()
     .from(chatMessages)
+    .where(and(
+      eq(chatMessages.userId, userId),
+      eq(chatMessages.chatType, chatType)
+    ))
+    .orderBy(desc(chatMessages.createdAt))
+    .limit(limit);
+  
+  return result.reverse() as ChatMessage[];
+};
+
+// Get all chat history for a user (across all chat types)
+export const getAllUserChatHistory = async (
+  userId: string,
+  limit: number = 100
+): Promise<ChatMessage[]> => {
+  const result = await db.select()
+    .from(chatMessages)
     .where(eq(chatMessages.userId, userId))
-    .where(eq(chatMessages.chatType, chatType))
     .orderBy(desc(chatMessages.createdAt))
     .limit(limit);
   
