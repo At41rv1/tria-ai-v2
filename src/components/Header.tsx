@@ -10,10 +10,10 @@ const Header = () => {
         <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
           <img 
             src="https://pipedream.com/s.v0/app_XaLh2x/logo/orig" 
-            alt="Triple Chat Logo" 
+            alt="Tria Ai Logo" 
             className="w-8 h-8 sm:w-10 sm:h-10"
           />
-          <span className="text-xl sm:text-2xl font-bold text-gray-800">Triple Chat</span>
+          <span className="text-xl sm:text-2xl font-bold text-gray-800">Tria AI</span>
         </Link>
         
         <UserButton />
