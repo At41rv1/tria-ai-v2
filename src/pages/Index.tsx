@@ -27,8 +27,8 @@ const Index = () => {
           </div>
           
           <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold text-gray-800 mb-6 animate-fade-in delay-300">
-            Triple
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-800"> Chat</span>
+            Tria
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-800"> AI</span>
           </h1>
           
           <p className="text-xl sm:text-2xl md:text-3xl text-gray-600 mb-6 animate-fade-in delay-500 leading-relaxed">
@@ -37,6 +37,7 @@ const Index = () => {
           
           <p className="text-base sm:text-lg text-gray-500 mb-12 max-w-3xl mx-auto animate-fade-in delay-700 leading-relaxed px-4">
             Experience dynamic conversations with AI companions or get personalized learning support with our intelligent tutoring system that adapts to your unique learning style.
+              Group Chat with AI Comming Soon ~ At41rv
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in delay-1000">
@@ -50,7 +51,7 @@ const Index = () => {
             
             <div className="flex items-center text-gray-500 text-sm bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200">
               <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-              Free • No Registration Required
+               Free to use • Only Login for chat history and premium features
             </div>
           </div>
         </div>
@@ -64,7 +65,8 @@ const Index = () => {
               Meet Your AI Companions
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Experience the future of AI interaction with personalities that understand, engage, and entertain
+              Experience the future of AI interaction with personalities that understand, engage, and entertain , 
+                        In Greek, the Number "3" is τρία (Tria)
             </p>
           </div>
           
