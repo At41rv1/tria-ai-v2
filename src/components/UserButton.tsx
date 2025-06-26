@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { User, LogOut } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { User, LogOut, Settings } from 'lucide-react';
 import { useAuth } from '../contexts/HybridAuthContext';
 import { toast } from "@/hooks/use-toast";
+import { Link } from 'react-router-dom';
 import AuthModal from './AuthModal';
 
 const UserButton = () => {
@@ -44,6 +45,13 @@ const UserButton = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuItem asChild>
+          <Link to="/settings" className="flex items-center cursor-pointer">
+            <Settings className="w-4 h-4 mr-2" />
+            Settings
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout}>
           <LogOut className="w-4 h-4 mr-2" />
           Sign Out
