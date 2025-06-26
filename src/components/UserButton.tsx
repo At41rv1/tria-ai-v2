@@ -24,10 +24,15 @@ const UserButton = () => {
     }
   };
 
+  const handleSignInClick = () => {
+    console.log('Sign in button clicked');
+    setShowAuthModal(true);
+  };
+
   if (!currentUser) {
     return (
       <>
-        <Button onClick={() => setShowAuthModal(true)} variant="outline" size="sm">
+        <Button onClick={handleSignInClick} variant="outline" size="sm" className="hover:bg-gray-50">
           <User className="w-4 h-4 mr-2" />
           Sign In
         </Button>
@@ -39,20 +44,20 @@ const UserButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="flex items-center space-x-2">
+        <Button variant="outline" size="sm" className="flex items-center space-x-2 hover:bg-gray-50">
           <User className="w-4 h-4" />
           <span className="hidden sm:inline">{currentUser.displayName || currentUser.email}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="bg-white border-gray-200">
         <DropdownMenuItem asChild>
-          <Link to="/settings" className="flex items-center cursor-pointer">
+          <Link to="/settings" className="flex items-center cursor-pointer hover:bg-gray-50">
             <Settings className="w-4 h-4 mr-2" />
             Settings
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout}>
+        <DropdownMenuSeparator className="bg-gray-200" />
+        <DropdownMenuItem onClick={handleLogout} className="hover:bg-gray-50">
           <LogOut className="w-4 h-4 mr-2" />
           Sign Out
         </DropdownMenuItem>
