@@ -65,7 +65,7 @@ const Chat = () => {
       const conversation = await createConversation(
         currentUser.id,
         `Chat ${new Date().toLocaleString()}`,
-        'triple'
+        'tria'
       );
       setCurrentConversationId(conversation.id);
       setMessages([]);
@@ -226,7 +226,7 @@ const Chat = () => {
           </div>
           <div className="flex-1 overflow-y-auto p-4">
             <ConversationHistory
-              chatType="triple"
+              chatType="tria"
               onSelectConversation={handleSelectConversation}
               currentConversationId={currentConversationId}
             />
@@ -267,7 +267,7 @@ const Chat = () => {
             
             <div className="text-center">
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-                Triple Chat
+                Tria Chat
               </h1>
               <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">AI Conversation Experience</p>
             </div>
@@ -292,7 +292,7 @@ const Chat = () => {
                     <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-r from-gray-600 to-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                       <User className="text-white" size={32} />
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Welcome to Triple Chat!</h3>
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Welcome to Tria Ai!</h3>
                     <p className="text-gray-600 mb-8 max-w-md mx-auto text-sm sm:text-base">
                       Start a conversation with Ram and Laxman. They'll both respond and interact with each other too!
                       {currentUser && <span className="block mt-2 text-green-600">✓ Your chat history will be saved</span>}
