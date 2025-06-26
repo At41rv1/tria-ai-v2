@@ -294,10 +294,10 @@ const Settings = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-600 mb-4">
-                  Get support or learn more about Triple Chat features.
+                  Get support or learn more about Tria AI features.
                 </p>
                 <Button variant="outline" className="w-full border-gray-400 text-gray-700 hover:bg-gray-100">
-                  Contact Support
+                  at41rv@gmail.com
                 </Button>
               </CardContent>
             </Card>
