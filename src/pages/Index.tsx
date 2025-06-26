@@ -152,7 +152,7 @@ const Index = () => {
       <footer className="relative py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-200 bg-white/50 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-500">
-            Built with ❤️ for the future of AI conversation
+            By At41rv for the Future of AI conversation
           </p>
         </div>
       </footer>
