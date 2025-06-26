@@ -1,15 +1,14 @@
 
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { config } from './environment';
 
 const firebaseConfig = {
-  apiKey: config.firebase.apiKey,
-  authDomain: config.firebase.authDomain,
-  projectId: config.firebase.projectId,
-  storageBucket: config.firebase.storageBucket,
-  messagingSenderId: config.firebase.messagingSenderId,
-  appId: config.firebase.appId
+  apiKey: 'AIzaSyAUwbCbsT2yvFvjUc0-eeJ2qCMibJKs0OY',
+  authDomain: 'a7-tria.firebaseapp.com',
+  projectId: 'a7-tria',
+  storageBucket: 'a7-tria.appspot.com',
+  messagingSenderId: '69423808863',
+  appId: '1:69423808863:web:your-app-id'
 };
 
 const app = initializeApp(firebaseConfig);

@@ -71,12 +71,12 @@ export const getUserConversations = async (
   userId: string,
   chatType?: string
 ): Promise<Conversation[]> => {
-  const query = db.select()
-    .from(conversations)
-    .where(eq(conversations.userId, userId));
+  let query = db.select().from(conversations).where(eq(conversations.userId, userId));
   
   if (chatType) {
-    query.where(and(eq(conversations.userId, userId), eq(conversations.chatType, chatType)));
+    query = db.select()
+      .from(conversations)
+      .where(and(eq(conversations.userId, userId), eq(conversations.chatType, chatType)));
   }
   
   const result = await query.orderBy(desc(conversations.updatedAt));
@@ -105,9 +105,7 @@ export const updateConversation = async (
 };
 
 export const deleteConversation = async (conversationId: string): Promise<void> => {
-  // Delete all messages in the conversation first
   await db.delete(chatMessages).where(eq(chatMessages.conversationId, conversationId));
-  // Then delete the conversation
   await db.delete(conversations).where(eq(conversations.id, conversationId));
 };
 
@@ -141,7 +139,6 @@ export const getConversationMessages = async (
   return result.reverse() as ChatMessage[];
 };
 
-// Legacy function for backward compatibility
 export const getChatHistory = async (
   userId: string,
   chatType: string,
@@ -167,7 +164,6 @@ export const getChatHistory = async (
   return result.reverse() as ChatMessage[];
 };
 
-// Get all chat history for a user (across all conversations)
 export const getAllUserChatHistory = async (
   userId: string,
   limit: number = 100
