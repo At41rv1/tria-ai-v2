@@ -149,7 +149,7 @@ const Chat = () => {
     try {
       const ramResponse = await callGroqAPI(
         `Here's our conversation so far:\n${conversationContext}\n\nPlease respond as Ram. Keep it conversational and engaging.`,
-        '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',
+        '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',
         'Ram'
       );
 
@@ -168,7 +168,7 @@ const Chat = () => {
         
         const laxmanResponse = await callGroqAPI(
           `Here's our conversation so far:\n${updatedContext}\n\nPlease respond as Laxman. You can respond to both the user and Ram's message. Keep it funny and engaging while being helpful.`,
-          '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',
+          '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',
           'Laxman'
         );
 
