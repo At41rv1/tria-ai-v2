@@ -51,7 +51,7 @@ const Index = () => {
             
             <div className="flex items-center text-gray-500 text-sm bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200">
               <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-               Free to use • Only Login for chat history and premium features
+               Free to use • Login To Use AI
             </div>
           </div>
         </div>
