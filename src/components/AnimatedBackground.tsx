@@ -119,20 +119,20 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
   });
   const frameIdRef = useRef<number | null>(null);
 
-  // Enhanced configuration for more wavy motion and darker lines
+  // Optimized configuration for performance and light appearance
   const config = {
-    lineColor: "rgba(75, 85, 99, 0.8)", // Much darker grey lines
-    waveSpeedX: 0.015, // Increased wave speed
-    waveSpeedY: 0.008, // Increased wave speed
-    waveAmpX: 35, // Increased wave amplitude
-    waveAmpY: 25, // Increased wave amplitude
-    friction: 0.92,
-    tension: 0.004,
-    maxCursorMove: 80,
-    xGap: 12, // Slightly tighter grid
-    yGap: 35,
-    autoWaveIntensity: 1.5, // New: automatic wave motion intensity
-    autoWaveSpeed: 0.002 // New: automatic wave motion speed
+    lineColor: "rgba(156, 163, 175, 0.25)", // Very light grey lines
+    waveSpeedX: 0.008, // Reduced for better performance
+    waveSpeedY: 0.005, // Reduced for better performance
+    waveAmpX: 20, // Reduced amplitude
+    waveAmpY: 15, // Reduced amplitude
+    friction: 0.94,
+    tension: 0.003,
+    maxCursorMove: 60,
+    xGap: 16, // Increased gap for fewer points
+    yGap: 40, // Increased gap for fewer points
+    autoWaveIntensity: 0.8, // Reduced intensity
+    autoWaveSpeed: 0.001 // Slower auto wave
   };
 
   useEffect(() => {
@@ -156,8 +156,8 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
     function setLines() {
       const { width, height } = boundingRef.current;
       linesRef.current = [];
-      const oWidth = width + 200;
-      const oHeight = height + 100;
+      const oWidth = width + 100; // Reduced padding
+      const oHeight = height + 50; // Reduced padding
       const { xGap, yGap } = config;
       const totalLines = Math.ceil(oWidth / xGap);
       const totalPoints = Math.ceil(oHeight / yGap);
@@ -196,38 +196,38 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
       
       lines.forEach((pts) => {
         pts.forEach((p) => {
-          // Enhanced wave motion with automatic movement
+          // Optimized wave motion
           const baseMove = noise.perlin2(
-            (p.x + time * waveSpeedX) * 0.002,
-            (p.y + time * waveSpeedY) * 0.0015
-          ) * 15; // Increased multiplier for more wave effect
+            (p.x + time * waveSpeedX) * 0.001, // Reduced frequency
+            (p.y + time * waveSpeedY) * 0.001  // Reduced frequency
+          ) * 8; // Reduced multiplier
           
-          // Add automatic wave motion even without mouse interaction
-          const autoWaveX = Math.sin(time * autoWaveSpeed + p.x * 0.01) * autoWaveIntensity;
-          const autoWaveY = Math.cos(time * autoWaveSpeed + p.y * 0.01) * autoWaveIntensity;
+          // Lighter automatic wave motion
+          const autoWaveX = Math.sin(time * autoWaveSpeed + p.x * 0.005) * autoWaveIntensity;
+          const autoWaveY = Math.cos(time * autoWaveSpeed + p.y * 0.005) * autoWaveIntensity;
           
           p.wave.x = Math.cos(baseMove) * waveAmpX + autoWaveX;
           p.wave.y = Math.sin(baseMove) * waveAmpY + autoWaveY;
 
-          // Enhanced mouse interaction
+          // Optimized mouse interaction
           const dx = p.x - mouse.sx;
           const dy = p.y - mouse.sy;
           const dist = Math.hypot(dx, dy);
-          const l = Math.max(150, mouse.vs);
+          const l = Math.max(120, mouse.vs); // Reduced interaction radius
           
           if (dist < l) {
             const s = 1 - dist / l;
-            const f = Math.cos(dist * 0.003) * s;
-            p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.0006;
-            p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.0006;
+            const f = Math.cos(dist * 0.005) * s; // Reduced frequency
+            p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.0003; // Reduced force
+            p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.0003; // Reduced force
           }
 
           p.cursor.vx += (0 - p.cursor.x) * tension;
           p.cursor.vy += (0 - p.cursor.y) * tension;
           p.cursor.vx *= friction;
           p.cursor.vy *= friction;
-          p.cursor.x += p.cursor.vx * 2;
-          p.cursor.y += p.cursor.vy * 2;
+          p.cursor.x += p.cursor.vx;
+          p.cursor.y += p.cursor.vy;
           p.cursor.x = Math.min(maxCursorMove, Math.max(-maxCursorMove, p.cursor.x));
           p.cursor.y = Math.min(maxCursorMove, Math.max(-maxCursorMove, p.cursor.y));
         });
@@ -248,7 +248,7 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
       ctx.clearRect(0, 0, width, height);
       ctx.beginPath();
       ctx.strokeStyle = config.lineColor;
-      ctx.lineWidth = 1.5; // Slightly thicker lines for better visibility
+      ctx.lineWidth = 1; // Thinner lines
       
       linesRef.current.forEach((points) => {
         if (points.length === 0) return;
@@ -271,17 +271,25 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
       ctx.stroke();
     }
 
+    let lastTime = 0;
     function tick(t: number) {
+      // Throttle to 30fps for better performance
+      if (t - lastTime < 33) {
+        frameIdRef.current = requestAnimationFrame(tick);
+        return;
+      }
+      lastTime = t;
+
       const mouse = mouseRef.current;
-      mouse.sx += (mouse.x - mouse.sx) * 0.08;
-      mouse.sy += (mouse.y - mouse.sy) * 0.08;
+      mouse.sx += (mouse.x - mouse.sx) * 0.06; // Slower interpolation
+      mouse.sy += (mouse.y - mouse.sy) * 0.06;
       
       const dx = mouse.x - mouse.lx;
       const dy = mouse.y - mouse.ly;
       const d = Math.hypot(dx, dy);
       mouse.v = d;
-      mouse.vs += (d - mouse.vs) * 0.08;
-      mouse.vs = Math.min(80, mouse.vs);
+      mouse.vs += (d - mouse.vs) * 0.06;
+      mouse.vs = Math.min(60, mouse.vs); // Reduced max velocity
       mouse.lx = mouse.x;
       mouse.ly = mouse.y;
       mouse.a = Math.atan2(dy, dx);
