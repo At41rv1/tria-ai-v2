@@ -9,7 +9,7 @@ import { saveChatMessage, getConversationMessages, createConversation } from '..
 
 interface Message {
   id: string;
-  sender: 'user' | 'ram' | 'laxman';
+  sender: 'user' | 'leo' | 'max';
   content: string;
   timestamp: Date;
 }
@@ -42,7 +42,7 @@ const Chat = () => {
       const history = await getConversationMessages(conversationId, 50);
       const formattedHistory = history.map(msg => ({
         id: msg.id,
-        sender: msg.sender as 'user' | 'ram' | 'laxman',
+        sender: msg.sender as 'user' | 'leo' | 'max',
         content: msg.content,
         timestamp: msg.createdAt
       }));
@@ -59,7 +59,13 @@ const Chat = () => {
   };
 
   const handleNewChat = async () => {
-    if (!currentUser) return;
+    if (!currentUser) {
+      // For non-logged users, just clear the current conversation
+      setCurrentConversationId('');
+      setMessages([]);
+      setShowHistory(false);
+      return;
+    }
     
     try {
       const conversation = await createConversation(
@@ -76,9 +82,9 @@ const Chat = () => {
   };
 
   const callGroqAPI = async (prompt: string, apiKey: string, senderName: string) => {
-    const systemPrompt = senderName === 'Ram' 
-      ? "You are Ram, a dedicated AI assistant who gives perfect answers with a touch of fun and engagement. You're intelligent, helpful, and make conversations enjoyable. Keep responses conversational and friendly. When other AIs respond, acknowledge them naturally in the conversation."
-      : "You are Laxman, a funny and witty AI assistant who delivers perfect answers with humor and lightness. You add entertainment value while being accurate and helpful. Keep responses conversational and add appropriate humor. When other AIs respond, engage with them naturally like friends would.";
+    const systemPrompt = senderName === 'Leo' 
+      ? "You are Leo, a dedicated AI assistant who gives perfect answers with a touch of fun and engagement. You're intelligent, helpful, and make conversations enjoyable. Keep responses conversational and friendly. When other AIs respond, acknowledge them naturally in the conversation."
+      : "You are Max, a funny and witty AI assistant who delivers perfect answers with humor and lightness. You add entertainment value while being accurate and helpful. Keep responses conversational and add appropriate humor. When other AIs respond, engage with them naturally like friends would.";
 
     try {
       const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -122,10 +128,14 @@ const Chat = () => {
 
   const handleSendMessage = async () => {
     if (!input.trim() || isLoading) return;
-    if (!currentUser) return;
 
-    // Create new conversation if none exists
-    if (!currentConversationId) {
+    // For non-logged users, create a temporary conversation ID if none exists
+    if (!currentUser && !currentConversationId) {
+      setCurrentConversationId('temp-' + Date.now());
+    }
+
+    // For logged users, create new conversation if none exists
+    if (currentUser && !currentConversationId) {
       await handleNewChat();
       return;
     }
@@ -138,49 +148,55 @@ const Chat = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
-    await saveMessage('user', userMessage.content);
+    if (currentUser) {
+      await saveMessage('user', userMessage.content);
+    }
     setInput('');
     setIsLoading(true);
 
     const conversationContext = messages.slice(-5).map(msg => 
-      `${msg.sender === 'user' ? 'User' : msg.sender === 'ram' ? 'Ram' : 'Laxman'}: ${msg.content}`
+      `${msg.sender === 'user' ? 'User' : msg.sender === 'leo' ? 'Leo' : 'Max'}: ${msg.content}`
     ).join('\n') + `\nUser: ${userMessage.content}`;
 
     try {
-      const ramResponse = await callGroqAPI(
-        `Here's our conversation so far:\n${conversationContext}\n\nPlease respond as Ram. Keep it conversational and engaging.`,
+      const leoResponse = await callGroqAPI(
+        `Here's our conversation so far:\n${conversationContext}\n\nPlease respond as Leo. Keep it conversational and engaging.`,
         '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',
-        'Ram'
+        'Leo'
       );
 
-      const ramMessage: Message = {
+      const leoMessage: Message = {
         id: (Date.now() + 1).toString(),
-        sender: 'ram',
-        content: ramResponse,
+        sender: 'leo',
+        content: leoResponse,
         timestamp: new Date(),
       };
 
-      setMessages(prev => [...prev, ramMessage]);
-      await saveMessage('ram', ramMessage.content);
+      setMessages(prev => [...prev, leoMessage]);
+      if (currentUser) {
+        await saveMessage('leo', leoMessage.content);
+      }
 
       setTimeout(async () => {
-        const updatedContext = conversationContext + `\nRam: ${ramResponse}`;
+        const updatedContext = conversationContext + `\nLeo: ${leoResponse}`;
         
-        const laxmanResponse = await callGroqAPI(
-          `Here's our conversation so far:\n${updatedContext}\n\nPlease respond as Laxman. You can respond to both the user and Ram's message. Keep it funny and engaging while being helpful.`,
+        const maxResponse = await callGroqAPI(
+          `Here's our conversation so far:\n${updatedContext}\n\nPlease respond as Max. You can respond to both the user and Leo's message. Keep it funny and engaging while being helpful.`,
           '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',
-          'Laxman'
+          'Max'
         );
 
-        const laxmanMessage: Message = {
+        const maxMessage: Message = {
           id: (Date.now() + 2).toString(),
-          sender: 'laxman',
-          content: laxmanResponse,
+          sender: 'max',
+          content: maxResponse,
           timestamp: new Date(),
         };
 
-        setMessages(prev => [...prev, laxmanMessage]);
-        await saveMessage('laxman', laxmanMessage.content);
+        setMessages(prev => [...prev, maxMessage]);
+        if (currentUser) {
+          await saveMessage('max', maxMessage.content);
+        }
         setIsLoading(false);
       }, 1500);
 
@@ -194,10 +210,10 @@ const Chat = () => {
     switch (sender) {
       case 'user':
         return 'You';
-      case 'ram':
-        return 'Ram';
-      case 'laxman':
-        return 'Laxman';
+      case 'leo':
+        return 'Leo';
+      case 'max':
+        return 'Max';
       default:
         return 'Unknown';
     }
@@ -207,9 +223,9 @@ const Chat = () => {
     switch (sender) {
       case 'user':
         return 'bg-gray-800 text-white shadow-lg';
-      case 'ram':
+      case 'leo':
         return 'bg-white text-gray-800 border border-gray-200 shadow-md';
-      case 'laxman':
+      case 'max':
         return 'bg-gray-100 text-gray-800 border border-gray-300 shadow-md';
       default:
         return 'bg-gray-100 text-gray-800';
@@ -218,8 +234,8 @@ const Chat = () => {
 
   return (
     <div className="h-screen bg-gradient-to-br from-gray-50 to-white flex">
-      {/* Sidebar for conversation history */}
-      {showHistory && (
+      {/* Sidebar for conversation history - only show if user is logged in */}
+      {showHistory && currentUser && (
         <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
           <div className="p-4 border-b border-gray-200">
             <h2 className="font-semibold text-gray-800">Chat History</h2>
@@ -248,13 +264,15 @@ const Chat = () => {
                 <Home size={20} className="sm:hidden" />
               </Link>
               
-              <button
-                onClick={() => setShowHistory(!showHistory)}
-                className="flex items-center text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                <MessageCircle size={20} className="mr-2" />
-                <span className="hidden sm:inline">History</span>
-              </button>
+              {currentUser && (
+                <button
+                  onClick={() => setShowHistory(!showHistory)}
+                  className="flex items-center text-gray-600 hover:text-gray-800 transition-colors"
+                >
+                  <MessageCircle size={20} className="mr-2" />
+                  <span className="hidden sm:inline">History</span>
+                </button>
+              )}
               
               <button
                 onClick={handleNewChat}
@@ -292,10 +310,14 @@ const Chat = () => {
                     <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-r from-gray-600 to-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                       <User className="text-white" size={32} />
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Welcome to Tria Ai!</h3>
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Welcome to Tria AI!</h3>
                     <p className="text-gray-600 mb-8 max-w-md mx-auto text-sm sm:text-base">
-                      Start a conversation with Ram and Laxman. They'll both respond and interact with each other too!
-                      {currentUser && <span className="block mt-2 text-green-600">✓ Your chat history will be saved</span>}
+                      Start a conversation with Leo and Max. They'll both respond and interact with each other too!
+                      {currentUser ? (
+                        <span className="block mt-2 text-green-600">✓ Your chat history will be saved</span>
+                      ) : (
+                        <span className="block mt-2 text-blue-600">💡 Sign in to save your chat history</span>
+                      )}
                     </p>
                   </div>
                   
@@ -304,14 +326,14 @@ const Chat = () => {
                       <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-gray-600 to-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform shadow-lg">
                         <User className="text-white" size={24} />
                       </div>
-                      <p className="text-lg font-semibold text-gray-700">Ram</p>
+                      <p className="text-lg font-semibold text-gray-700">Leo</p>
                       <p className="text-xs sm:text-sm text-gray-500">Dedicated & Intelligent</p>
                     </div>
                     <div className="text-center group">
                       <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform shadow-lg">
                         <User className="text-white" size={24} />
                       </div>
-                      <p className="text-lg font-semibold text-gray-700">Laxman</p>
+                      <p className="text-lg font-semibold text-gray-700">Max</p>
                       <p className="text-xs sm:text-sm text-gray-500">Funny & Witty</p>
                     </div>
                   </div>
@@ -348,7 +370,7 @@ const Chat = () => {
                       <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-100"></div>
                       <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-200"></div>
                     </div>
-                    <span className="text-sm text-gray-600 font-medium">AIs are thinking...</span>
+                    <span className="text-sm text-gray-600 font-medium">Leo and Max are thinking...</span>
                   </div>
                 </div>
               </div>
@@ -367,7 +389,7 @@ const Chat = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                placeholder="Type your message to Ram and Laxman..."
+                placeholder="Type your message to Leo and Max..."
                 className="flex-1 px-4 sm:px-6 py-3 sm:py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent bg-white shadow-lg placeholder-gray-500 text-sm sm:text-base"
                 disabled={isLoading}
               />

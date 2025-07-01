@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, MessageCircle, ArrowLeft, Users, Brain, Settings } from 'lucide-react';
@@ -51,7 +50,7 @@ const ChatSelector = () => {
               How would you like to chat today?
             </h2>
             <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto px-4">
-              Choose between personalized learning assistance or engaging conversation with our AI companions
+              Choose between personalized learning assistance or engaging conversation with Leo and Max
             </p>
           </div>
 
@@ -92,9 +91,9 @@ const ChatSelector = () => {
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform shadow-lg">
                   <MessageCircle className="text-white" size={32} />
                 </div>
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-3 sm:mb-4">Conversation with Ram & Laxman</h3>
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-3 sm:mb-4">Conversation with Leo & Max</h3>
                 <p className="text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed mb-4 sm:mb-6">
-                  Engage in dynamic three-way conversations with Ram and Laxman - two distinct AI personalities 
+                  Engage in dynamic three-way conversations with Leo and Max - two distinct AI personalities 
                   that bring intelligence, humor, and engaging dialogue to every interaction.
                 </p>
                 <div className="flex flex-col sm:flex-row sm:justify-center space-y-2 sm:space-y-0 sm:space-x-2 lg:space-x-4">
@@ -109,6 +108,16 @@ const ChatSelector = () => {
                 </div>
               </div>
             </Link>
+          </div>
+
+          {/* No Login Required Notice */}
+          <div className="text-center mt-8">
+            <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full shadow-lg">
+              <MessageCircle className="w-4 h-4 mr-2 text-green-500" />
+              <span className="text-sm text-gray-600">
+                No signup required - Start chatting instantly!
+              </span>
+            </div>
           </div>
         </div>
       </div>

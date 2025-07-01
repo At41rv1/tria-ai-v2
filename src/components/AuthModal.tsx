@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -75,6 +74,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <DialogTitle className="text-center text-xl font-semibold text-gray-800">
             {isLogin ? 'Welcome Back' : 'Create Account'}
           </DialogTitle>
+          <p className="text-center text-sm text-gray-500 mt-2">
+            Sign in to save your chat history with Leo and Max
+          </p>
         </DialogHeader>
         
         <div className="space-y-4">
@@ -157,6 +159,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             >
               {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
             </Button>
+          </div>
+
+          <div className="text-center pt-4 border-t border-gray-200">
+            <p className="text-xs text-gray-500">
+              You can chat without signing in, but your conversations won't be saved
+            </p>
           </div>
         </div>
       </DialogContent>

@@ -1,4 +1,3 @@
-
 import { pgTable, text, timestamp, uuid, boolean } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('users', {
@@ -22,7 +21,7 @@ export const chatMessages = pgTable('chat_messages', {
   id: uuid('id').primaryKey().defaultRandom(),
   conversationId: uuid('conversation_id').references(() => conversations.id),
   userId: uuid('user_id').references(() => users.id),
-  sender: text('sender').notNull(), // 'user', 'ram', 'laxman', 'tutor1', 'tutor2'
+  sender: text('sender').notNull(), // 'user', 'leo', 'max', 'tutor1', 'tutor2'
   content: text('content').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
 });

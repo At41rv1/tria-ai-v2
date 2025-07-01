@@ -1,4 +1,3 @@
-
 import { db } from '../config/neon';
 import { users, chatMessages, userSessions, conversations } from './schema';
 import { eq, desc, and } from 'drizzle-orm';

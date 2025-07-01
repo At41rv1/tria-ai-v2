@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -35,6 +34,7 @@ const UserButton = () => {
         <Button onClick={handleSignInClick} variant="outline" size="sm" className="hover:bg-gray-50">
           <User className="w-4 h-4 mr-2" />
           Sign In
+          <span className="hidden sm:inline ml-1">(Optional)</span>
         </Button>
         <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
       </>
