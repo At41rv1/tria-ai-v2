@@ -119,18 +119,20 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
   });
   const frameIdRef = useRef<number | null>(null);
 
-  // Configuration optimized for grey/white theme
+  // Enhanced configuration for more wavy motion and darker lines
   const config = {
-    lineColor: "rgba(156, 163, 175, 0.3)", // Light grey with transparency
-    waveSpeedX: 0.008,
-    waveSpeedY: 0.003,
-    waveAmpX: 20,
-    waveAmpY: 12,
-    friction: 0.94,
-    tension: 0.003,
-    maxCursorMove: 60,
-    xGap: 15,
-    yGap: 40
+    lineColor: "rgba(75, 85, 99, 0.8)", // Much darker grey lines
+    waveSpeedX: 0.015, // Increased wave speed
+    waveSpeedY: 0.008, // Increased wave speed
+    waveAmpX: 35, // Increased wave amplitude
+    waveAmpY: 25, // Increased wave amplitude
+    friction: 0.92,
+    tension: 0.004,
+    maxCursorMove: 80,
+    xGap: 12, // Slightly tighter grid
+    yGap: 35,
+    autoWaveIntensity: 1.5, // New: automatic wave motion intensity
+    autoWaveSpeed: 0.002 // New: automatic wave motion speed
   };
 
   useEffect(() => {
@@ -180,35 +182,52 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
       const lines = linesRef.current;
       const mouse = mouseRef.current;
       const noise = noiseRef.current;
-      const { waveSpeedX, waveSpeedY, waveAmpX, waveAmpY, friction, tension, maxCursorMove } = config;
+      const { 
+        waveSpeedX, 
+        waveSpeedY, 
+        waveAmpX, 
+        waveAmpY, 
+        friction, 
+        tension, 
+        maxCursorMove,
+        autoWaveIntensity,
+        autoWaveSpeed
+      } = config;
       
       lines.forEach((pts) => {
         pts.forEach((p) => {
-          const move = noise.perlin2(
+          // Enhanced wave motion with automatic movement
+          const baseMove = noise.perlin2(
             (p.x + time * waveSpeedX) * 0.002,
             (p.y + time * waveSpeedY) * 0.0015
-          ) * 8;
-          p.wave.x = Math.cos(move) * waveAmpX;
-          p.wave.y = Math.sin(move) * waveAmpY;
+          ) * 15; // Increased multiplier for more wave effect
+          
+          // Add automatic wave motion even without mouse interaction
+          const autoWaveX = Math.sin(time * autoWaveSpeed + p.x * 0.01) * autoWaveIntensity;
+          const autoWaveY = Math.cos(time * autoWaveSpeed + p.y * 0.01) * autoWaveIntensity;
+          
+          p.wave.x = Math.cos(baseMove) * waveAmpX + autoWaveX;
+          p.wave.y = Math.sin(baseMove) * waveAmpY + autoWaveY;
 
+          // Enhanced mouse interaction
           const dx = p.x - mouse.sx;
           const dy = p.y - mouse.sy;
           const dist = Math.hypot(dx, dy);
-          const l = Math.max(120, mouse.vs);
+          const l = Math.max(150, mouse.vs);
           
           if (dist < l) {
             const s = 1 - dist / l;
-            const f = Math.cos(dist * 0.002) * s;
-            p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.0004;
-            p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.0004;
+            const f = Math.cos(dist * 0.003) * s;
+            p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.0006;
+            p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.0006;
           }
 
           p.cursor.vx += (0 - p.cursor.x) * tension;
           p.cursor.vy += (0 - p.cursor.y) * tension;
           p.cursor.vx *= friction;
           p.cursor.vy *= friction;
-          p.cursor.x += p.cursor.vx * 1.5;
-          p.cursor.y += p.cursor.vy * 1.5;
+          p.cursor.x += p.cursor.vx * 2;
+          p.cursor.y += p.cursor.vy * 2;
           p.cursor.x = Math.min(maxCursorMove, Math.max(-maxCursorMove, p.cursor.x));
           p.cursor.y = Math.min(maxCursorMove, Math.max(-maxCursorMove, p.cursor.y));
         });
@@ -229,7 +248,7 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
       ctx.clearRect(0, 0, width, height);
       ctx.beginPath();
       ctx.strokeStyle = config.lineColor;
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 1.5; // Slightly thicker lines for better visibility
       
       linesRef.current.forEach((points) => {
         if (points.length === 0) return;
