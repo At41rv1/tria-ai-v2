@@ -2,21 +2,25 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, Users, ArrowRight, Sparkles, Zap, Shield, Star, CheckCircle, Brain, Heart, Globe, Award } from 'lucide-react';
 import Header from '../components/Header';
+import AnimatedBackground from '../components/AnimatedBackground';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden">
+      {/* Animated Background */}
+      <AnimatedBackground />
+      
       <Header />
       
       {/* Subtle Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gray-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gray-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gray-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gray-300 rounded-full mix-blend-multiply filter blur-xl opacity-15 animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gray-400 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse delay-500"></div>
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <section className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 sm:px-6 lg:px-8 z-10">
         <div className="text-center max-w-6xl mx-auto">
           <div className="mb-8 animate-fade-in">
             <div className="inline-flex items-center px-6 py-3 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 shadow-lg text-gray-700 text-sm mb-8 hover:shadow-xl transition-all duration-300">
@@ -43,7 +47,7 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in delay-1000">
             <Link 
               to="/chat-selector" 
-              className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-gray-800 to-gray-700 text-white rounded-full text-lg font-semibold hover:from-gray-900 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl"
+              className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-gray-800 to-gray-700 text-white rounded-full text-lg font-semibold hover:from-gray-900 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl relative z-10"
             >
               Start Chatting Now
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -58,7 +62,7 @@ const Index = () => {
       </section>
 
       {/* Meet Your AI Companions Section */}
-      <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-6">
@@ -71,7 +75,7 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-2 gap-8 mb-16">
-            <div className="group bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-gray-200 hover:bg-white hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            <div className="group bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-gray-200 hover:bg-white hover:shadow-2xl transition-all duration-300 hover:scale-105 relative z-10">
               <div className="w-16 h-16 bg-gradient-to-r from-gray-600 to-gray-700 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <Users className="text-white" size={32} />
               </div>
@@ -87,7 +91,7 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="group bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-gray-200 hover:bg-white hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            <div className="group bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-gray-200 hover:bg-white hover:shadow-2xl transition-all duration-300 hover:scale-105 relative z-10">
               <div className="w-16 h-16 bg-gradient-to-r from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <MessageCircle className="text-white" size={32} />
               </div>
@@ -105,7 +109,7 @@ const Index = () => {
           </div>
           
           <div className="text-center">
-            <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 sm:p-12 border border-gray-200 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-300">
+            <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 sm:p-12 border border-gray-200 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-300 relative z-10">
               <div className="w-20 h-20 bg-gradient-to-r from-gray-700 to-gray-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
                 <MessageCircle className="text-white" size={40} />
               </div>
@@ -130,7 +134,7 @@ const Index = () => {
       </section>
 
       {/* About Us Section */}
-      <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white/50 backdrop-blur-sm">
+      <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white/50 backdrop-blur-sm z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-6">
@@ -177,7 +181,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 sm:p-12 border border-gray-200 shadow-xl">
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 sm:p-12 border border-gray-200 shadow-xl relative z-10">
             <div className="text-center mb-8">
               <div className="w-16 h-16 bg-gradient-to-r from-gray-700 to-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <Award className="text-white" size={32} />
@@ -200,7 +204,7 @@ const Index = () => {
       </section>
 
       {/* Features Showcase */}
-      <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-6">
@@ -213,7 +217,7 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300">
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300 relative z-10">
               <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
                 <MessageCircle className="w-6 h-6 text-gray-600" />
               </div>
@@ -223,7 +227,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300">
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300 relative z-10">
               <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
                 <Users className="w-6 h-6 text-gray-600" />
               </div>
@@ -233,7 +237,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300">
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300 relative z-10">
               <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
                 <Zap className="w-6 h-6 text-gray-600" />
               </div>
@@ -243,7 +247,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300">
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300 relative z-10">
               <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
                 <Shield className="w-6 h-6 text-gray-600" />
               </div>
@@ -253,7 +257,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300">
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300 relative z-10">
               <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
                 <Brain className="w-6 h-6 text-gray-600" />
               </div>
@@ -263,7 +267,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300">
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300 relative z-10">
               <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
                 <Globe className="w-6 h-6 text-gray-600" />
               </div>
@@ -277,7 +281,7 @@ const Index = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 z-10">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-6">
             Ready to Experience the Future?
@@ -288,7 +292,7 @@ const Index = () => {
           </p>
           <Link 
             to="/chat-selector" 
-            className="group inline-flex items-center px-12 py-5 bg-gradient-to-r from-gray-800 to-gray-700 text-white rounded-full text-xl font-semibold hover:from-gray-900 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl"
+            className="group inline-flex items-center px-12 py-5 bg-gradient-to-r from-gray-800 to-gray-700 text-white rounded-full text-xl font-semibold hover:from-gray-900 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl relative z-10"
           >
             Start Chatting Now
             <MessageCircle className="ml-3 w-6 h-6 group-hover:rotate-12 transition-transform" />
@@ -297,7 +301,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="relative py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-200 bg-white/50 backdrop-blur-sm">
+      <footer className="relative py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-200 bg-white/50 backdrop-blur-sm z-10">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-500 mb-4">
             Crafted with ❤️ by At41rv for the Future of AI Conversation

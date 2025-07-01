@@ -71,7 +71,7 @@ const Chat = () => {
       const conversation = await createConversation(
         currentUser.id,
         `Chat ${new Date().toLocaleString()}`,
-        'tria'
+        'triple'
       );
       setCurrentConversationId(conversation.id);
       setMessages([]);
@@ -242,7 +242,7 @@ const Chat = () => {
           </div>
           <div className="flex-1 overflow-y-auto p-4">
             <ConversationHistory
-              chatType="tria"
+              chatType="triple"
               onSelectConversation={handleSelectConversation}
               currentConversationId={currentConversationId}
             />
