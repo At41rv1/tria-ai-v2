@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,6 +8,7 @@ import Index from "./pages/Index";
 import Chat from "./pages/Chat";
 import StudyChat from "./pages/StudyChat";
 import Settings from "./pages/Settings";
+import Analytics from "./pages/Analytics";
 import ChatSelector from "./components/ChatSelector";
 import NotFound from "./pages/NotFound";
 
@@ -27,6 +27,7 @@ const App = () => (
             <Route path="/chat" element={<Chat />} />
             <Route path="/study-chat" element={<StudyChat />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/analytics" element={<Analytics />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

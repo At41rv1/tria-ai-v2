@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { BarChart3 } from 'lucide-react';
 import UserButton from './UserButton';
 
 const Header = () => {
@@ -31,6 +32,13 @@ const Header = () => {
               className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 hover:scale-105 transform"
             >
               Chat
+            </Link>
+            <Link 
+              to="/analytics" 
+              className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 hover:scale-105 transform flex items-center space-x-1"
+            >
+              <BarChart3 className="w-4 h-4" />
+              <span>Analytics</span>
             </Link>
             <div className="w-px h-6 bg-gray-300"></div>
           </div>

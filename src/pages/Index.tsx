@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle, Users, ArrowRight, Database, Zap, Shield, Star, CheckCircle, Brain, Globe, Award, Server, Lock, BarChart3, Layers, RefreshCw, Clock } from 'lucide-react';
+import { MessageCircle, Users, ArrowRight, Database, Zap, Shield, Star, CheckCircle, Brain, Globe, Award, Server, Lock, BarChart3, Layers, RefreshCw, Clock, TrendingUp } from 'lucide-react';
 import Header from '../components/Header';
 import AnimatedBackground from '../components/AnimatedBackground';
 
@@ -44,6 +44,16 @@ const Index = () => {
               <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
             
+            <Link 
+              to="/analytics" 
+              className="group inline-flex items-center px-8 py-4 bg-white text-gray-900 rounded-lg text-lg font-semibold border border-gray-200 hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              <BarChart3 className="mr-3 w-5 h-5" />
+              View Analytics
+            </Link>
+          </div>
+          
+          <div className="mt-8 flex items-center justify-center">
             <div className="flex items-center text-gray-600 text-base bg-gray-50 px-6 py-3 rounded-lg border border-gray-200">
               <CheckCircle className="w-5 h-5 mr-3 text-green-500" />
               Free to use • No signup required
@@ -106,6 +116,24 @@ const Index = () => {
                 title: "Point-in-time Recovery", 
                 desc: "Advanced backup and recovery systems ensure your data is never lost.",
                 feature: "Data Protection"
+              },
+              { 
+                icon: Server, 
+                title: "Connection Pooling", 
+                desc: "Optimized connection management for maximum performance and efficiency.",
+                feature: "Performance Optimization"
+              },
+              { 
+                icon: Globe, 
+                title: "Global Distribution", 
+                desc: "Multi-region deployment ensures low latency worldwide for all users.",
+                feature: "Global Reach"
+              },
+              { 
+                icon: TrendingUp, 
+                title: "Performance Monitoring", 
+                desc: "Real-time monitoring and alerting for optimal database performance.",
+                feature: "Live Monitoring"
               }
             ].map((feature, index) => (
               <div key={index} className="group bg-white rounded-xl p-8 border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
@@ -247,7 +275,10 @@ const Index = () => {
               { icon: Zap, title: "Lightning Fast", desc: "Get instant responses powered by advanced AI models optimized for speed and accuracy." },
               { icon: Shield, title: "Privacy Focused", desc: "Your conversations are secure and private. We prioritize your data protection and privacy." },
               { icon: Brain, title: "Context Aware", desc: "Leo and Max remember your conversation context and respond accordingly for natural flow." },
-              { icon: Globe, title: "Always Available", desc: "24/7 availability means Leo and Max are always ready to chat whenever you need them." }
+              { icon: Globe, title: "Always Available", desc: "24/7 availability means Leo and Max are always ready to chat whenever you need them." },
+              { icon: BarChart3, title: "Advanced Analytics", desc: "Track your conversation patterns and insights with comprehensive analytics dashboard." },
+              { icon: Database, title: "Reliable Storage", desc: "Your conversations are safely stored with enterprise-grade Neon database technology." },
+              { icon: Award, title: "Achievement System", desc: "Unlock achievements and track your progress as you engage with our AI companions." }
             ].map((feature, index) => (
               <div key={index} className="group bg-white rounded-xl p-8 border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
                 <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-6 group-hover:bg-gray-200 transition-colors">
@@ -272,13 +303,22 @@ const Index = () => {
               Join thousands of users discovering the next level of AI conversation technology. 
               Start chatting with Leo and Max right now - no signup required!
             </p>
-            <Link 
-              to="/chat-selector" 
-              className="group inline-flex items-center px-12 py-6 bg-gray-900 text-white rounded-xl text-xl font-bold hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg"
-            >
-              Start Chatting Now
-              <MessageCircle className="ml-4 w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <Link 
+                to="/chat-selector" 
+                className="group inline-flex items-center px-12 py-6 bg-gray-900 text-white rounded-xl text-xl font-bold hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                Start Chatting Now
+                <MessageCircle className="ml-4 w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
+              </Link>
+              <Link 
+                to="/analytics" 
+                className="group inline-flex items-center px-12 py-6 bg-white text-gray-900 rounded-xl text-xl font-bold border border-gray-200 hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                <BarChart3 className="mr-4 w-6 h-6" />
+                View Analytics
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -302,6 +342,10 @@ const Index = () => {
             <div className="flex items-center text-gray-500 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
               <Brain className="w-4 h-4 mr-2" />
               <span className="text-sm font-medium">AI Powered</span>
+            </div>
+            <div className="flex items-center text-gray-500 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              <span className="text-sm font-medium">Analytics Ready</span>
             </div>
           </div>
           <p className="text-gray-500 text-sm">
